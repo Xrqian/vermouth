@@ -1,4 +1,4 @@
-module dalmore
+module vermouth
 
 go 1.12
 

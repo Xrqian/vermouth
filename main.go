@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/blazehu/vermouth/util"
-	"github.com/blazehu/vermouth/model"
-	"github.com/blazehu/vermouth/conf"
+	"vermouth/util"
+	"vermouth/model"
+	"vermouth/conf"
 )
 
 func main() {
