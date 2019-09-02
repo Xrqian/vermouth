@@ -1,11 +1,13 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
-	Id         int64     `json:"id",gorm:"primary_key;type:int(11);not null" `
-	OpenID     string    `json:"open_id",gorm:"type:varchar(255);unique;not null"`
-	SessionKey string    `json:"session_key",gorm:"type:varchar(255)"`
+	Id         uint      `json:"id",gorm:"primary_key"`
+	OpenID     string    `json:"open_id",gorm:"unique"`
+	SessionKey string    `json:"session_key",gorm:"type:varchar(254)"`
 	Avatar     string    `json:"avatar",gorm:"type:varchar(255)"`
 	Nickname   string    `json:"nickname",gorm:"type:varchar(255)"`
 	Gender     int       `json:"gender",gorm:"type:int(1)"`
