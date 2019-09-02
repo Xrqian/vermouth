@@ -7,11 +7,12 @@ import (
 )
 
 type CoreConfig struct {
-	MysqlDbHost   string `json:"mysqlDbHost"`
-	MysqlDbPort   string `json:"mysqlDbPort"`
-	MysqlDbName   string `json:"mysqlDbName"`
-	MysqlUserName string `json:"mysqlUserName"`
-	MysqlDbPass   string `json:"mysqlDbPass"`
+	MysqlDbHost       string `json:"mysqlDbHost"`
+	MysqlDbPort       string `json:"mysqlDbPort"`
+	MysqlDbName       string `json:"mysqlDbName"`
+	MysqlUserName     string `json:"mysqlUserName"`
+	MysqlDbPass       string `json:"mysqlDbPass"`
+	MysqlMaxOpenConns int    `json:"mysqlMaxOpenConns"`
 }
 
 func FileExists(path string) (bool, error) {
