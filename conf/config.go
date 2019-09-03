@@ -13,7 +13,12 @@ type CoreConfig struct {
 	MysqlUserName     string `json:"mysqlUserName"`
 	MysqlDbPass       string `json:"mysqlDbPass"`
 	MysqlMaxOpenConns int    `json:"mysqlMaxOpenConns"`
+	HttpPort          string `json:"httpPort"`
 }
+
+var (
+	Cfg = new(CoreConfig)
+)
 
 func FileExists(path string) (bool, error) {
 	_, err := os.Stat(path)
@@ -45,11 +50,9 @@ func ReadConfig(fileName string, Cfg interface{}) error {
 	return nil
 }
 
-func GetCoreConfig() *CoreConfig {
-	clientPointer := new(CoreConfig)
-	err := ReadConfig("config", clientPointer)
+func Init() {
+	err := ReadConfig("config", Cfg)
 	if err != nil {
 		log.Fatal("Read Config error: ", err)
 	}
-	return clientPointer
 }

@@ -20,15 +20,9 @@ func (User) TableName() string {
 	return "user"
 }
 
-type PayRecord struct {
-	gorm.Model
-	Cny      float32 `gorm:"type:float;not null",json:"cny"`
-	Mode     string  `gorm:"type:varchar(255)",json:"mode"`
-	Category string  `gorm:"type:varchar(255)",json:"category"`
-	Comment  string  `gorm:"type:varchar(255)",json:"comment"`
-	UserID   int     `gorm:"type:int(10);not null",json:"user_id"`
-}
-
-func (PayRecord) TableName() string {
-	return "pay_record"
+type UserList struct {
+	Data     []User
+	Page     int
+	PageSize int
+	Count    int
 }

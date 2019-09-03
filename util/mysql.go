@@ -1,17 +1,17 @@
 package util
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"fmt"
 	"sync"
 )
 
 type MysqlConnect struct {
-	Db *gorm.DB
+	DB *gorm.DB
 }
 
-var instance *MysqlConnect
+var mysqlConnect *MysqlConnect
 
 var once sync.Once
 
@@ -30,7 +30,7 @@ func GetConnect(username string, password string, host string, port string, db s
 		if err != nil {
 			fmt.Println(err.Error(), " 连接数据库失败")
 		}
-		instance = &MysqlConnect{db}
+		mysqlConnect = &MysqlConnect{db}
 	})
-	return instance
+	return mysqlConnect
 }
