@@ -1,20 +1,18 @@
 package model
 
 import (
-	"time"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	Id         uint      `json:"id",gorm:"primary_key"`
-	OpenID     string    `json:"open_id",gorm:"unique"`
-	SessionKey string    `json:"session_key",gorm:"type:varchar(254)"`
-	Avatar     string    `json:"avatar",gorm:"type:varchar(255)"`
-	Nickname   string    `json:"nickname",gorm:"type:varchar(255)"`
-	Gender     int       `json:"gender",gorm:"type:int(1)"`
-	Province   string    `json:"province",gorm:"type:varchar(255)"`
-	Country    string    `json:"country",gorm:"type:varchar(255)"`
-	DateJoined time.Time `json:"date_joined",gorm:"type:datetime;ASSOCIATION_AUTOUPDATE"`
-	LastLogin  time.Time `json:"last_login",gorm:"type:datetime;ASSOCIATION_AUTOUPDATE"`
+	gorm.Model
+	OpenID     string `gorm:"type:varchar(128);unique;not null",json:"open_id"`
+	SessionKey string `gorm:"type:varchar(128);not null",json:"session_key"`
+	Nickname   string `gorm:"type:varchar(128);not null",json:"nickname"`
+	Avatar     string `gorm:"type:varchar(255)",json:"avatar"`
+	Province   string `gorm:"type:varchar(255)",json:"province"`
+	Country    string `gorm:"type:varchar(255)",json:"country"`
+	Gender     int    `gorm:"type:int(1)",json:"gender"`
 }
 
 func (User) TableName() string {
@@ -22,12 +20,12 @@ func (User) TableName() string {
 }
 
 type PayRecord struct {
-	Id       int64   `json:"id",gorm:"primary_key;type:int(11);not null" `
-	Cny      float32 `json:"cny",gorm:"type:float;not null" `
-	Mode     string  `json:"mode",gorm:"type:varchar(255)" `
-	Category string  `json:"category",gorm:"type:varchar(255)" `
-	Comment  string  `json:"comment",gorm:"type:varchar(255)" `
-	User     User    `gorm:"ForeignKey:PayRecordId"`
+	gorm.Model
+	Cny      float32 `gorm:"type:float;not null",json:"cny"`
+	Mode     string  `gorm:"type:varchar(255)",json:"mode"`
+	Category string  `gorm:"type:varchar(255)",json:"category"`
+	Comment  string  `gorm:"type:varchar(255)",json:"comment"`
+	User     User    `gorm:"FOREIGNKEY:UserID"`
 }
 
 func (PayRecord) TableName() string {
