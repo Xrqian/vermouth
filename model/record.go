@@ -16,3 +16,10 @@ type PayRecord struct {
 func (PayRecord) TableName() string {
 	return "pay_record"
 }
+
+type PayRecordList struct {
+	Data     []PayRecord
+	Page     int
+	PageSize int
+	Count    int
+}

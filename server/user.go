@@ -32,5 +32,16 @@ func listUser(c *gin.Context) {
 }
 
 func listUserRecord(c *gin.Context) {
-	c.String(http.StatusOK, "listUserRecord")
+	handle := dao.PayRecordDaoImpl{}
+	page := parseInt(c.DefaultQuery("page", "1"))
+	pageSize := parseInt(c.DefaultQuery("size", "10"))
+	parameter := model.Parameter{
+		Page:     page,
+		PageSize: pageSize,
+	}
+	recordList, err := handle.List(&parameter)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, recordList)
+	}
+	c.JSON(http.StatusOK, recordList)
 }
