@@ -10,16 +10,12 @@ import (
 	"vermouth/model"
 )
 
-type MysqlConnect struct {
-	DB *gorm.DB
-}
-
 var (
-	once    sync.Once
-	MysqlDB *MysqlConnect
+	once sync.Once
+	DB   *gorm.DB
 )
 
-func Init() *MysqlConnect {
+func Init() {
 	dbSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		conf.Cfg.MysqlUserName,
 		conf.Cfg.MysqlDbPass,
@@ -34,10 +30,10 @@ func Init() *MysqlConnect {
 		if err != nil {
 			fmt.Println(err.Error(), " 连接数据库失败")
 		}
-		MysqlDB = &MysqlConnect{db}
-		MysqlDB.DB.DB().SetMaxOpenConns(conf.Cfg.MysqlMaxOpenConns)
-		MysqlDB.DB.DB().SetConnMaxLifetime(10 * time.Minute)
-		MysqlDB.DB.AutoMigrate(&model.User{}, &model.PayRecord{})
+		db.DB().SetMaxOpenConns(conf.Cfg.MysqlMaxOpenConns)
+		db.DB().SetConnMaxLifetime(10 * time.Minute)
+		db.AutoMigrate(&model.User{}, &model.PayRecord{})
+		// init DB
+		DB = db
 	})
-	return MysqlDB
 }
