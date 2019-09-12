@@ -1,8 +1,8 @@
 package util
 
 import (
-	"time"
 	"strconv"
+	"time"
 )
 
 func ParseInt(value string) int {
