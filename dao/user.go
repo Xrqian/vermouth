@@ -6,6 +6,7 @@ import (
 
 type UserDao interface {
 	List(parameter *model.Parameter) (*model.UserList, error)
+	Retrieve(id int) (*model.User, error)
 }
 
 type UserDaoImpl struct {
@@ -28,4 +29,16 @@ func (u UserDaoImpl) List(parameter *model.Parameter) (*model.UserList, error) {
 		Count:    count,
 	}
 	return userList, nil
+}
+
+func (u UserDaoImpl) Retrieve(id int) (*model.User, error) {
+	user := model.User{}
+
+	db := u.DB()
+	err := db.First(&user, id).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }

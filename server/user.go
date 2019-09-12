@@ -5,21 +5,13 @@ import (
 	"net/http"
 	"vermouth/dao"
 	"vermouth/model"
-	"strconv"
+	"vermouth/util"
 )
-
-func parseInt(value string) int {
-	i, err := strconv.Atoi(value)
-	if err != nil {
-		return 0
-	}
-	return i
-}
 
 func listUser(c *gin.Context) {
 	handle := dao.UserDaoImpl{}
-	page := parseInt(c.DefaultQuery("page", "1"))
-	pageSize := parseInt(c.DefaultQuery("size", "10"))
+	page := util.ParseInt(c.DefaultQuery("page", "1"))
+	pageSize := util.ParseInt(c.DefaultQuery("size", "10"))
 	parameter := model.Parameter{
 		Page:     page,
 		PageSize: pageSize,
@@ -31,10 +23,20 @@ func listUser(c *gin.Context) {
 	c.JSON(http.StatusOK, userList)
 }
 
+func retrieveUser(c *gin.Context) {
+	handle := dao.UserDaoImpl{}
+	id := util.ParseInt(c.Param("id"))
+	user, err := handle.Retrieve(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, user)
+	}
+	c.JSON(http.StatusOK, user)
+}
+
 func listUserRecord(c *gin.Context) {
 	handle := dao.PayRecordDaoImpl{}
-	page := parseInt(c.DefaultQuery("page", "1"))
-	pageSize := parseInt(c.DefaultQuery("size", "10"))
+	page := util.ParseInt(c.DefaultQuery("page", "1"))
+	pageSize := util.ParseInt(c.DefaultQuery("size", "10"))
 	parameter := model.Parameter{
 		Page:     page,
 		PageSize: pageSize,
