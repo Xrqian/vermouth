@@ -18,9 +18,12 @@ func (u PayRecordDaoImpl) List(parameter *model.Parameter) (*model.PayRecordList
 
 	db := u.DB()
 	db = db.Scopes(paginateScope(parameter))
-	db.Model(&records).Count(&count)
-	db.Find(&records)
 
+	err := db.Model(&records).Count(&count).Error
+	if err != nil {
+		return nil, err
+	}
+	db.Find(&records)
 	recordList := &model.PayRecordList{
 		Data:     records,
 		Page:     parameter.Page,
@@ -28,4 +31,16 @@ func (u PayRecordDaoImpl) List(parameter *model.Parameter) (*model.PayRecordList
 		Count:    count,
 	}
 	return recordList, nil
+}
+
+func (u PayRecordDaoImpl) Retrieve(id int) (*model.PayRecord, error) {
+	record := model.PayRecord{}
+
+	db := u.DB()
+
+	err := db.First(&record, id).Error
+	if err != nil {
+		return nil, err
+	}
+	return &record, nil
 }

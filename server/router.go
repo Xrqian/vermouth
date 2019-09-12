@@ -8,5 +8,6 @@ func InitRouter(router *gin.Engine) {
 	v1 := router.Group("/api/v1")
 	v1.GET("/user", listUser)
 	v1.GET("/user/:id", retrieveUser)
-	v1.GET("/record", listUserRecord)
+	v1.GET("/record", listRecord)
+	v1.GET("/record/:id", retrieveRecord)
 }

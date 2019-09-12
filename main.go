@@ -32,14 +32,14 @@ func main() {
 
 	<-quit
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown:", err)
 	}
 	select {
 	case <-ctx.Done():
-		log.Println("Timeout of 5 seconds.")
+		log.Println("Timeout of 1 seconds.")
 	}
 	log.Println("Server exiting")
 }
