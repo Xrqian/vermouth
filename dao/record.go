@@ -6,6 +6,7 @@ import (
 
 type PayRecordDao interface {
 	List(parameter *model.Parameter) (*model.PayRecordList, error)
+	Retrieve(id int) (*model.User, error)
 }
 
 type PayRecordDaoImpl struct {
