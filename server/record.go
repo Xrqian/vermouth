@@ -34,3 +34,15 @@ func retrieveRecord(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, record)
 }
+
+func createRecord(c *gin.Context){
+	handle := dao.PayRecordDaoImpl{}
+	recordData := model.PayRecord{}
+	err := c.ShouldBind(&recordData)
+	record, err := handle.Create(recordData)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}

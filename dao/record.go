@@ -45,3 +45,9 @@ func (u PayRecordDaoImpl) Retrieve(id int) (*model.PayRecord, error) {
 	}
 	return &record, nil
 }
+
+func (u PayRecordDaoImpl) Create(record model.PayRecord) (*model.PayRecord, error) {
+	db := u.DB()
+	err := db.Create(&record).Error
+	return &record, err
+}

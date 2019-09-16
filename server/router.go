@@ -11,4 +11,5 @@ func InitRouter(router *gin.Engine) {
 	v1.POST("/user", createUser)
 	v1.GET("/record", listRecord)
 	v1.GET("/record/:id", retrieveRecord)
+	v1.POST("/record", createRecord)
 }
