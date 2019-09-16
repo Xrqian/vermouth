@@ -18,12 +18,11 @@ func (u PayRecordDaoImpl) List(parameter *model.Parameter) (*model.PayRecordList
 	records := make([]model.PayRecord, 0)
 
 	db := u.DB()
-	db = db.Scopes(paginateScope(parameter))
-
 	err := db.Model(&records).Count(&count).Error
 	if err != nil {
 		return nil, err
 	}
+	db = db.Scopes(paginateScope(parameter))
 	db.Find(&records)
 	recordList := &model.PayRecordList{
 		Data:     records,

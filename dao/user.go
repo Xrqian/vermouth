@@ -19,11 +19,11 @@ func (u UserDaoImpl) List(parameter *model.Parameter) (*model.UserList, error) {
 	users := make([]model.User, 0)
 
 	db := u.DB()
-	db = db.Scopes(paginateScope(parameter))
 	err := db.Model(&users).Count(&count).Error
 	if err != nil {
 		return nil, err
 	}
+	db = db.Scopes(paginateScope(parameter))
 	db.Find(&users)
 	userList := &model.UserList{
 		Data:     users,
