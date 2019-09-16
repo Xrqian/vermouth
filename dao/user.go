@@ -7,6 +7,7 @@ import (
 type UserDao interface {
 	List(parameter *model.Parameter) (*model.UserList, error)
 	Retrieve(id int) (*model.User, error)
+	Create(user model.User) (*model.User, error)
 }
 
 type UserDaoImpl struct {
@@ -19,7 +20,6 @@ func (u UserDaoImpl) List(parameter *model.Parameter) (*model.UserList, error) {
 
 	db := u.DB()
 	db = db.Scopes(paginateScope(parameter))
-
 	err := db.Model(&users).Count(&count).Error
 	if err != nil {
 		return nil, err
@@ -38,10 +38,15 @@ func (u UserDaoImpl) Retrieve(id int) (*model.User, error) {
 	user := model.User{}
 
 	db := u.DB()
-
 	err := db.First(&user, id).Error
 	if err != nil {
 		return nil, err
 	}
 	return &user, nil
+}
+
+func (u UserDaoImpl) Create(user model.User) (*model.User, error) {
+	db := u.DB()
+	err := db.Create(&user).Error
+	return &user, err
 }

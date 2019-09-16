@@ -36,3 +36,17 @@ func retrieveUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, user)
 }
+
+func createUser(c *gin.Context) {
+	handle := dao.UserDaoImpl{}
+
+	userData := model.User{}
+	err := c.ShouldBind(&userData)
+
+	user, err := handle.Create(userData)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
